@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>OrderDetail</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#03a6f3">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:200,300,400,500,600,700,800,900" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="css/owl.carousel.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+<div th:replace="~{/fragment/header :: header}"></div>
+<div class="breadcrumb">
+    <div class="container">
+        <a th:href="@{/}" class="breadcrumb-item">Trang chủ</a>
+        <span class="breadcrumb-item active">Chi tiết đơn hàng</span>
+    </div>
+</div>
+
+<section class="product-sec">
+    <div class="container">
+        <h1>Chi tiết đơn hàng</h1>
+        <div class="xs tabls">
+            <div class="bs-example4" data-example-id="simple-responsive-table">
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                        <tr>
+                            <th>Mã sách</th>
+                            <th>Ảnh</th>
+                            <th>Tên sách</th>
+                            <th>Giá sách</th>
+                            <th>Số lượng</th>
+                            <th>Thành tiền</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr class="active" th:each="cartDetail : ${cart.getCartDetails()}" th:data-id="${cartDetail.id}">
+                            <td th:text="${cartDetail.getBook().getId()}"></td>
+                            <td><img style="max-width: 50px; max-height 70px"
+                                     th:src="@{${cartDetail.getBook().getImage()}}" alt="img">
+                            </td>
+                            <td th:text="${cartDetail.getBook().getName()}"></td>
+                            <td th:text="${#numbers.formatDecimal(cartDetail.getBook().getPrice(), 0, 'COMMA', 0, 'POINT') + ' ₫'}"></td>
+                            <td th:text="${cartDetail.amount}"></td>
+                            <td th:text="${#numbers.formatDecimal(cartDetail.totalMoney, 0, 'COMMA', 0, 'POINT') + ' ₫'}"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <h4 class="blank1" th:text="${'TỔNG ĐƠN HÀNG: ' + #numbers.formatDecimal(cart.totalMoney, 0, 'COMMA', 0, 'POINT') + ' ₫'}"></h4>
+                </div><!-- /.table-responsive -->
+            </div>
+        </div>
+    </div>
+</section>
+<div class="footer" th:replace="/fragment/footer :: footer"></div>
+<script src="js/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/owl.carousel.min.js"></script>
+<script src="js/custom.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.9.0/sweetalert2.all.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+
+    $(".change-amount").change(function () {
+        dataCartProduct = {};
+        dataCartProduct.id = $(this).attr("cartDetailId");
+        dataCartProduct.amount = $(this).val();
+
+        NProgress.start();
+        var linkPut = "/cartDetail";
+        axios.put(linkPut, dataCartProduct).then(function (res) {
+            NProgress.done();
+            if (res.data.success) {
+                location.reload();
+            } else {
+                 location.reload();
+            }
+        }, function (err) {
+            NProgress.done();
+             location.reload();
+        });
+    });
+
+    $(".delete-cartDetail").on("click", function () {
+        var id = $(this).attr("cartDetailId");
+        NProgress.start();
+        var linkDelete = "/cartDetail/" + id;
+        axios.delete(linkDelete).then(function (res) {
+            NProgress.done();
+            if (res.data.success) {
+                location.reload();
+            } else {
+                location.reload();
+            }
+        }, function (err) {
+            NProgress.done();
+            location.reload();
+        });
+    })
+
+
+});
+
+
+</script>
+</body>
+
+</html>

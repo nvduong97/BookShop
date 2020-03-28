@@ -1,0 +1,141 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="head">
+    <title>Admin</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="keywords" content="Easy Admin Panel Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template,
+Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyEricsson, Motorola web design"/>
+    <script type="application/x-javascript">
+         addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); }
+
+
+
+
+    </script>
+    <!-- Bootstrap Core CSS -->
+    <link th:href="@{/admin/css/bootstrap.min.css}" rel='stylesheet' type='text/css'/>
+    <!-- Custom CSS -->
+    <link th:href="@{/admin/css/style.css}" rel='stylesheet' type='text/css'/>
+    <!-- Graph CSS -->
+    <link th:href="@{/admin/css/font-awesome.css}" rel="stylesheet">
+    <!-- jQuery -->
+    <!-- lined-icons -->
+    <link rel="stylesheet" th:href="@{/admin/css/icon-font.min.css}" type='text/css'/>
+    <!-- //lined-icons -->
+    <!-- chart -->
+    <script th:src="@{/admin/js/Chart.js}"></script>
+    <!-- //chart -->
+    <!--animate-->
+    <link th:href="@{admin/css/animate.css}" rel="stylesheet" type="text/css" media="all">
+    <script th:src="@{admin/js/wow.min.js}"></script>
+    <script>
+		 new WOW().init();
+
+
+
+
+    </script>
+    <!--//end-animate-->
+    <!----webfonts--->
+    <link href='http://fonts.googleapis.com/css?family=Cabin:400,400italic,500,500italic,600,600italic,700,700italic'
+          rel='stylesheet' type='text/css'>
+    <!---//webfonts--->
+    <!-- Meters graphs -->
+    <script th:src="@{admin/js/jquery-1.10.2.min.js}"></script>
+    <!-- Placed js at the end of the document so the pages load faster -->
+
+</head>
+
+<body class="sticky-header left-side-collapsed" onload="initMap()">
+<div th:replace="~{/fragment/header_admin :: header}"></div>
+<section>
+    <div class="main-content main-content3">
+        <div id="page-wrapper">
+            <div class="graphs">
+                <h3 class="blank1">Thêm mới sách</h3>
+                <div class="tab-content">
+                    <div class="tab-pane active" id="horizontal-form">
+                        <form class="form-horizontal">
+                            <div class="form-group">
+                                <label for="focusedinput" class="col-sm-2 control-label">Book's name</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control1" id="focusedinput"
+                                           placeholder="Book's name">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputPassword" class="col-sm-2 control-label">Amount</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control1" id="inputPassword"
+                                           placeholder="Amount">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="smallinput" class="col-sm-2 control-label label-input-sm">Price</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control1 input-sm" id="smallinput"
+                                           placeholder="Price">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Publisher</label>
+                                <div class="col-sm-8"><select id="selector1" class="form-control1">
+                                    <option th:each="publisher : ${publisherDtos}"
+                                            th:value="${publisher.id}"
+                                            th:text="${publisher.name}"></option>
+                                </select></div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Author</label>
+                                <div class="col-sm-8"><select id="selector2" class="form-control1">
+                                    <option th:each="author : ${authorDtos}"
+                                            th:value="${author.id}"
+                                            th:text="${author.name}"></option>
+                                </select></div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="exampleInputFile" class="col-sm-2 control-label">Image</label>
+                                <div class="col-sm-2">
+                                    <input type="file" id="exampleInputFile">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label"></label>
+                                <div class="col-sm-2">
+                                    <img style="max-width: 200px; height: auto"
+                                         src="https://www.vietnamprintpack.com/images/default.jpg"
+                                         class="product-main-image">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="bs-example" data-example-id="form-validation-states-with-icons">
+                    <form>
+                        <div class="panel-footer">
+                            <div class="row">
+                                <div class="col-sm-8 col-sm-offset-2">
+                                    <button class="btn-success btn btn-save-category" id="btn-add-new"
+                                            data-toggle="modal">Submit
+                                    </button>
+                                    <button class="btn-default btn">Cancel</button>
+                                    <button class="btn-inverse btn">Reset</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<footer th:replace="~{/fragment/header_admin :: footer}"></footer>
+<script src="admin/js/jquery.nicescroll.js"></script>
+<script src="admin/js/scripts.js"></script>
+<!-- Bootstrap Core JavaScript -->
+<script src="admin/js/bootstrap.min.js"></script>
+</body>
+</html>

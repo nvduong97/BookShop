@@ -1,0 +1,141 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="head">
+    <title>Admin</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="keywords" content="Easy Admin Panel Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template,
+Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyEricsson, Motorola web design"/>
+    <script type="application/x-javascript">
+         addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); }
+
+
+
+
+    </script>
+    <!-- Bootstrap Core CSS -->
+    <link th:href="@{/admin/css/bootstrap.min.css}" rel='stylesheet' type='text/css'/>
+    <!-- Custom CSS -->
+    <link th:href="@{/admin/css/style.css}" rel='stylesheet' type='text/css'/>
+    <!-- Graph CSS -->
+    <link th:href="@{/admin/css/font-awesome.css}" rel="stylesheet">
+    <!-- jQuery -->
+    <!-- lined-icons -->
+    <link rel="stylesheet" th:href="@{/admin/css/icon-font.min.css}" type='text/css'/>
+    <!-- //lined-icons -->
+    <!-- chart -->
+    <script th:src="@{/admin/js/Chart.js}"></script>
+    <!-- //chart -->
+    <!--animate-->
+    <link th:href="@{admin/css/animate.css}" rel="stylesheet" type="text/css" media="all">
+    <script th:src="@{admin/js/wow.min.js}"></script>
+    <script>
+		 new WOW().init();
+
+
+
+
+    </script>
+    <!--//end-animate-->
+    <!----webfonts--->
+    <link href='http://fonts.googleapis.com/css?family=Cabin:400,400italic,500,500italic,600,600italic,700,700italic'
+          rel='stylesheet' type='text/css'>
+    <!---//webfonts--->
+    <!-- Meters graphs -->
+    <script th:src="@{admin/js/jquery-1.10.2.min.js}"></script>
+    <!-- Placed js at the end of the document so the pages load faster -->
+
+</head>
+
+<body class="sticky-header left-side-collapsed" onload="initMap()">
+<header th:fragment="header">
+    <!-- left side start-->
+    <div class="left-side sticky-left-side">
+
+        <!--logo and iconic logo start-->
+        <div class="logo">
+            <h1><a th:href="@{/admin}">Book <span>Admin</span></a></h1>
+        </div>
+        <div class="logo-icon text-center">
+            <a th:href="@{/admin}"><i class="lnr lnr-home"></i> </a>
+        </div>
+
+        <!--logo and iconic logo end-->
+        <div class="left-side-inner">
+
+            <!--sidebar nav start-->
+            <ul class="nav nav-pills nav-stacked custom-nav">
+                <li><a th:href="@{/admin/user}"><i class="fa fa-user"></i> <span>Quản lý tài khoản</span></a></li>
+                <li><a th:href="@{/admin}"><i class="lnr lnr-book"></i> <span>Quản lý sách</span></a></li>
+                <li><a th:href="@{/admin/order}"><i class="lnr lnr-select"></i> <span>Quản lý đơn hàng</span></a></li>
+            </ul>
+            <!--sidebar nav end-->
+        </div>
+    </div>
+    <!-- left side end-->
+    <div class="header-section">
+
+        <!--toggle button start-->
+        <a class="toggle-btn  menu-collapsed"><i class="fa fa-bars"></i></a>
+        <!--toggle button end-->
+
+        <!--notification menu start -->
+        <div class="menu-right">
+            <div class="user-panel-top">
+                <div class="profile_details_left">
+                    <ul class="nofitications-dropdown">
+                        <li class="login_box" id="loginContainer">
+                            <div class="search-box">
+                                <div id="sb-search" class="sb-search sb-search-open">
+                                    <form th:action="@{/admin}" method="get">
+                                        <input class="sb-search-input" name="keyword" th:value="*{keyword}"
+                                               placeholder="Enter your search term..."
+                                               type="search" id="search">
+                                        <input class="sb-search-submit" type="submit" value="">
+                                        <span class="sb-icon-search"> </span>
+                                    </form>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="profile_details">
+                    <ul>
+                        <li class="dropdown profile_details_drop">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                <div class="profile_img">
+                                    <span style="background:url(images/1.jpg) no-repeat center"> </span>
+                                    <div class="user-name">
+                                        <p>Duong<span>Administrator</span></p>
+                                    </div>
+                                    <i class="lnr lnr-chevron-down"></i>
+                                    <i class="lnr lnr-chevron-up"></i>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </a>
+                            <ul class="dropdown-menu drp-mnu">
+<!--                                <li><a href="#"><i class="fa fa-cog"></i> Cài đặt</a></li>-->
+                                <li><a href="#"><i class="fa fa-user"></i>Tài khoản</a></li>
+                                <li><a th:href="@{/}"><i class="fa fa-sign-out"></i> BookStore</a></li>
+                                <li><a th:href="@{/logout}"><i class="fa fa-sign-out"></i> Đăng xuất</a></li>
+                            </ul>
+                        </li>
+                        <div class="clearfix"></div>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!--notification menu end -->
+    </div>
+</header>
+
+<footer th:fragment="footer">
+    <p>Copyright &copy; 2020.Company name All rights reserved. Duong Nguyen</p>
+</footer>
+
+<script src="admin/js/jquery.nicescroll.js"></script>
+<script src="admin/js/scripts.js"></script>
+<!-- Bootstrap Core JavaScript -->
+<script src="admin/js/bootstrap.min.js"></script>
+</body>
+</html>

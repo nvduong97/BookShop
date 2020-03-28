@@ -1,0 +1,295 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Update</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="keywords" content="Easy Admin Panel Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template,
+Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyEricsson, Motorola web design"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+          integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css">
+    <script type="application/x-javascript">
+         addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); }
+    </script>
+    <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.min.css" rel='stylesheet' type='text/css'/>
+    <!-- Custom CSS -->
+    <link href="css/style.css" rel='stylesheet' type='text/css'/>
+    <!-- Graph CSS -->
+    <link href="css/font-awesome.css" rel="stylesheet">
+    <!-- jQuery -->
+    <!-- lined-icons -->
+    <link rel="stylesheet" href="css/icon-font.min.css" type='text/css'/>
+    <!-- //lined-icons -->
+    <!-- chart -->
+    <script src="js/Chart.js"></script>
+    <!-- //chart -->
+    <!--animate-->
+    <link href="css/animate.css" rel="stylesheet" type="text/css" media="all">
+    <script src="js/wow.min.js"></script>
+    <script>
+		 new WOW().init();
+
+
+
+
+
+
+
+
+    </script>
+    <!--//end-animate-->
+    <!----webfonts--->
+    <link href='http://fonts.googleapis.com/css?family=Cabin:400,400italic,500,500italic,600,600italic,700,700italic'
+          rel='stylesheet' type='text/css'>
+    <!---//webfonts--->
+    <!-- Meters graphs -->
+    <script src="js/jquery-1.10.2.min.js"></script>
+    <!-- Placed js at the end of the document so the pages load faster -->
+
+</head>
+
+<body class="sticky-header left-side-collapsed" onload="initMap()">
+<section>
+    <!-- left side start-->
+    <div class="left-side sticky-left-side">
+
+        <!--logo and iconic logo start-->
+        <div class="logo">
+            <h1><a th:href="@{/admin}">Book <span>Admin</span></a></h1>
+        </div>
+        <div class="logo-icon text-center">
+            <a th:href="@{/admin}"><i class="lnr lnr-home"></i> </a>
+        </div>
+
+        <!--logo and iconic logo end-->
+        <div class="left-side-inner">
+
+            <!--sidebar nav start-->
+            <ul class="nav nav-pills nav-stacked custom-nav">
+                <li><a th:href="@{/admin}"><i class="lnr lnr-menu"></i> <span>Quản lý sách</span></a></li>
+                <!--                <li><a th:href="@{/admin/add}"><i class="lnr lnr-pencil"></i> <span>Add</span></a></li>-->
+                <li><a th:href="@{/admin/order}"><i class="lnr lnr-book"></i> <span>Quản lý đơn hàng</span></a></li>
+            </ul>
+            <!--sidebar nav end-->
+        </div>
+    </div>
+    <!-- left side end-->
+
+    <!-- main content start-->
+    <div class="main-content main-content3">
+        <!-- header-starts -->
+        <div class="header-section">
+
+            <!--toggle button start-->
+            <a class="toggle-btn  menu-collapsed"><i class="fa fa-bars"></i></a>
+            <!--toggle button end-->
+
+            <!--notification menu start -->
+            <div class="menu-right">
+                <div class="user-panel-top">
+                    <div class="profile_details">
+                        <ul>
+                            <li class="dropdown profile_details_drop">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                    <div class="profile_img">
+                                        <div class="user-name">
+                                            <p>Duong<span>Administrator</span></p>
+                                        </div>
+                                        <i class="lnr lnr-chevron-down"></i>
+                                        <i class="lnr lnr-chevron-up"></i>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                </a>
+                                <ul class="dropdown-menu drp-mnu">
+                                    <li><a href="#"><i class="fa fa-cog"></i> Settings</a></li>
+                                    <li><a href="#"><i class="fa fa-user"></i>Profile</a></li>
+                                    <li><a th:href="@{/admin/login}"><i class="fa fa-sign-out"></i> Logout</a></li>
+                                </ul>
+                            </li>
+                            <div class="clearfix"></div>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!--notification menu end -->
+        </div>
+        <!-- //header-ends -->
+        <div id="page-wrapper">
+            <div class="graphs">
+                <h3 class="blank1">Cập nhật sách</h3>
+                <div class="tab-content">
+                    <div class="tab-pane active" id="horizontal-form">
+                        <form class="form-horizontal">
+                            <div class="form-group">
+                                <label for="focusedinput" class="col-sm-2 control-label">Book's name</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control1" id="focusedinput" th:value="${book.name}"
+                                           placeholder="Book's name">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputPassword" class="col-sm-2 control-label">Amount</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control1" id="inputPassword" th:value="${book.amount}"
+                                           placeholder="Amount">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="smallinput" class="col-sm-2 control-label label-input-sm">Price</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control1 input-sm" id="smallinput" th:value="${book.price}"
+                                           placeholder="Price">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Publisher</label>
+                                <div class="col-sm-8"><select id="selector1" class="form-control1">
+                                    <option th:each="publisher : ${publisherDtos}"
+                                            th:value="${publisher.id}"
+                                            th:text="${publisher.name}"></option>
+                                </select></div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Author</label>
+                                <div class="col-sm-8"><select id="selector2" class="form-control1">
+                                    <option th:each="author : ${authorDtos}"
+                                            th:value="${author.id}"
+                                            th:text="${author.name}"></option>
+                                </select></div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="exampleInputFile" class="col-sm-2 control-label">Image</label>
+                                <div class="col-sm-2">
+                                    <input type="file" id="exampleInputFile">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label"></label>
+                                <div class="col-sm-2">
+                                    <img style="max-width: 200px; height: auto" th:src="@{${book.image}}" alt="img" class="product-main-image"/>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="bs-example" data-example-id="form-validation-states-with-icons">
+                    <form>
+                        <div class="panel-footer">
+                            <div class="row">
+                                <div class="col-sm-8 col-sm-offset-2">
+                                    <button class="btn-success btn btn-save-category" id="btn-add-new" th:attr="bookId=${book.getId()}"
+                                            data-toggle="modal">Submit
+                                    </button>
+                                    <button class="btn-default btn">Cancel</button>
+                                    <button class="btn-inverse btn">Reset</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--footer section start-->
+    <footer>
+        <p>Copyright &copy; 2020.Company name All rights reserved.<a target="_blank"
+                                                                     href="https://www.facebook.com/nvduong97"> Duong
+            Nguyen</a>
+        </p>
+    </footer>
+    <!--footer section end-->
+</section>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+
+    var book = {};
+    var bookId = $(this).attr("bookId");
+
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                // $('#preview-product-img').attr('src', e.target.result);
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    $("#exampleInputFile").change(function() {
+        readURL(this);
+        var formData = new FormData();
+        NProgress.start();
+        formData.append('file', $("#exampleInputFile")[0].files[0]);
+        axios.post("/books/upload", formData).then(function(res){
+            NProgress.done();
+            if(res.data.success) {
+                $('.product-main-image').attr('src', res.data.link);
+            }
+        }, function(err){
+            NProgress.done();
+        });
+    });
+
+    $("#btn-add-new").on("click", function () {
+           if($("#focusedinput").val() === "" || $("#inputPassword").val() === "" || $("#smallinput").val()==="") {
+                    swal(
+                        "You need to fill all values"
+                    );
+                    return;
+                }
+
+        book.name = $('#focusedinput').val();
+        book.amount = $('#inputPassword').val();
+        book.price = $("#smallinput").val();
+        book.publisherId = $('#selector1').val()
+        book.authorId = $('#selector2').val()
+        book.image = $('.product-main-image').attr('src');
+        NProgress.start();
+        var linkPost = "/books/" + bookId;
+        axios.put(linkPost, book).then(function(res){
+                    NProgress.done();
+                    if(res.data != null) {
+                        swal(
+                            'Good job!',
+                            'OK',
+                            'success'
+                        ).then(function() {
+                            location.reload();
+                        });
+                    } else {
+                        swal(
+                            'Error',
+                            'fail',
+                            'error'
+                        );
+                    }
+                }, function(err){
+                    NProgress.done();
+                    swal(
+                        'Error',
+                        'Some error when saving product',
+                        'error'
+                    );
+                })
+    });
+});
+
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.9.0/sweetalert2.all.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<!--</script>-->
+<script src="js/jquery.nicescroll.js"></script>
+<script src="js/scripts.js"></script>
+<!-- Bootstrap Core JavaScript -->
+<script src="js/bootstrap.min.js"></script>
+</body>
+</html>

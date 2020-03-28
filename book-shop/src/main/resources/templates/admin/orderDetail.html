@@ -1,0 +1,99 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="head">
+    <title>Admin</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="keywords" content="Easy Admin Panel Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template,
+Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyEricsson, Motorola web design"/>
+    <script type="application/x-javascript">
+         addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); }
+
+
+
+
+    </script>
+    <!-- Bootstrap Core CSS -->
+    <link th:href="@{/admin/css/bootstrap.min.css}" rel='stylesheet' type='text/css'/>
+    <!-- Custom CSS -->
+    <link th:href="@{/admin/css/style.css}" rel='stylesheet' type='text/css'/>
+    <!-- Graph CSS -->
+    <link th:href="@{/admin/css/font-awesome.css}" rel="stylesheet">
+    <!-- jQuery -->
+    <!-- lined-icons -->
+    <link rel="stylesheet" th:href="@{/admin/css/icon-font.min.css}" type='text/css'/>
+    <!-- //lined-icons -->
+    <!-- chart -->
+    <script th:src="@{/admin/js/Chart.js}"></script>
+    <!-- //chart -->
+    <!--animate-->
+    <link th:href="@{admin/css/animate.css}" rel="stylesheet" type="text/css" media="all">
+    <script th:src="@{admin/js/wow.min.js}"></script>
+    <script>
+		 new WOW().init();
+
+
+
+
+    </script>
+    <!--//end-animate-->
+    <!----webfonts--->
+    <link href='http://fonts.googleapis.com/css?family=Cabin:400,400italic,500,500italic,600,600italic,700,700italic'
+          rel='stylesheet' type='text/css'>
+    <!---//webfonts--->
+    <!-- Meters graphs -->
+    <script th:src="@{admin/js/jquery-1.10.2.min.js}"></script>
+    <!-- Placed js at the end of the document so the pages load faster -->
+
+</head>
+
+<body class="sticky-header left-side-collapsed" onload="initMap()">
+<div th:replace="~{/fragment/header_admin :: header}"></div>
+<section>
+    <div class="main-content">
+        <div id="page-wrapper">
+            <div class="graphs">
+                <h3 class="blank1">Chi tiết đơn hàng</h3>
+                <div class="xs tabls">
+                    <div class="bs-example4" data-example-id="contextual-table">
+                        <table class="table">
+                            <h4 class="blank1" th:text="${'Tên khách hàng: ' + cart.getUser().getName()}"></h4>
+                            <h4 class="blank1" th:text="${'Địa chỉ: ' + cart.getUser().getAddress()}"></h4>
+                            <h4 class="blank1" th:text="${'Số điện thoại: ' + cart.getUser().getPhone()}"></h4>
+                            <thead>
+                            <tr>
+                                <th>Mã sách</th>
+                                <th>Ảnh</th>
+                                <th>Tên sách</th>
+                                <th>Giá sách</th>
+                                <th>Số lượng</th>
+                                <th>Thành tiền</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr class="active" th:each="cartDetail : ${cart.getCartDetails()}" th:data-id="${cartDetail.id}">
+                                <td th:text="${cartDetail.getBook().getId()}"></td>
+                                <td><img style="max-width: 50px; max-height 70px"
+                                         th:src="@{${cartDetail.getBook().getImage()}}" alt="img">
+                                </td>
+                                <td th:text="${cartDetail.getBook().getName()}"></td>
+                                <td th:text="${#numbers.formatDecimal(cartDetail.getBook().getPrice(), 0, 'COMMA', 0, 'POINT') + ' ₫'}"></td>
+                                <td th:text="${cartDetail.amount}"></td>
+                                <td th:text="${#numbers.formatDecimal(cartDetail.totalMoney, 0, 'COMMA', 0, 'POINT') + ' ₫'}"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <h4 class="blank1" th:text="${'Tổng đơn hàng: ' + #numbers.formatDecimal(cart.totalMoney, 0, 'COMMA', 0, 'POINT') + ' ₫'}"></h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<footer th:replace="~{/fragment/header_admin :: footer}"></footer>
+<script src="admin/js/jquery.nicescroll.js"></script>
+<script src="admin/js/scripts.js"></script>
+<!-- Bootstrap Core JavaScript -->
+<script src="admin/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Book Store</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#03a6f3">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:200,300,400,500,600,700,800,900" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="css/owl.carousel.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+<footer th:fragment="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="address">
+                    <h4>Địa chỉ</h4>
+                    <h6>BookStore Company, số 7 Nguyễn Đình Chiểu, Đống Đa, Hà Nội</h6>
+                    <h6>Điện thoại : 800 1234 5678</h6>
+                    <h6>Email : info@bookstore.com</h6>
+                </div>
+                <div class="timing">
+                    <h4>Thời gian mở của</h4>
+                    <h6>Thứ 2 - Thứ 6: 7am - 10pm</h6>
+                    <h6>​​Thứ 7: 8am - 10pm</h6>
+                    <h6>​Chủ nhật: 8am - 11pm</h6>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="navigation">
+                    <h4>Danh  mục</h4>
+                    <ul>
+                        <li><a th:href="@{/}">Trang chủ</a></li>
+                        <li><a th:href="@{/shop}">Sách</a></li>
+                        <li><a th:href="@{/account}">Tài khoản</a></li>
+                        <li><a th:href="@{/}">Điều khoản - chính sách</a></li>
+                        <li><a th:href="@{/}">Về chúng tôi</a></li>
+                    </ul>
+                </div>
+                <div class="navigation">
+                    <h4>Trợ giúp</h4>
+                    <ul>
+                        <li><a href="">Vận chuyển & Hoàn trả</a></li>
+                        <li><a href="privacy-policy.html">Chính sách</a></li>
+                        <li><a href="faq.html">Giới thiệu</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-5">
+                <div class="form">
+                    <h3>Liên hệ với chúng tôi</h3>
+                    <h6></h6>
+                    <form>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <input placeholder="Name" required>
+                            </div>
+                            <div class="col-md-6">
+                                <input type="email" placeholder="Email" required>
+                            </div>
+                            <div class="col-md-12">
+                                <textarea placeholder="Messege"></textarea>
+                            </div>
+                            <div class="col-md-12">
+                                <button class="btn black">Gửi ngay</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="copy-right">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>(C) 2020. All Rights Reserved. Nguyen Van Duong</h5>
+                </div>
+                <div class="col-md-6">
+                    <div class="share align-middle">
+                        <span class="fb"><i class="fa fa-facebook-official"></i></span>
+                        <span class="instagram"><i class="fa fa-instagram"></i></span>
+                        <span class="twitter"><i class="fa fa-twitter"></i></span>
+                        <span class="pinterest"><i class="fa fa-pinterest"></i></span>
+                        <span class="google"><i class="fa fa-google-plus"></i></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+<script src="js/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/owl.carousel.min.js"></script>
+<script src="js/custom.js"></script>
+</body>
+
+</html>

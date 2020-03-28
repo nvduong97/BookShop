@@ -1,0 +1,167 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Sign Up</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="keywords" content="Easy Admin Panel Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template,
+Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyEricsson, Motorola web design"/>
+    <script type="application/x-javascript">
+         addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); }
+    </script>
+    <!-- Bootstrap Core CSS -->
+    <link rel='stylesheet' type='text/css' href="css/bootstrap.min.css">
+    <!-- Custom CSS -->
+    <link rel='stylesheet' type='text/css' href="css/style.css">
+    <!-- Graph CSS -->
+    <link rel="stylesheet" href="css/font-awesome.css">
+    <!-- jQuery -->
+    <!-- lined-icons -->
+    <link rel="stylesheet" type='text/css' href="css/icon-font.min.css">
+    <!-- //lined-icons -->
+    <!-- chart -->
+    <script src="js/Chart.js"></script>
+    <!-- //chart -->
+    <!--animate-->
+    <link rel="stylesheet" type="text/css" media="all" href="css/animate.css">
+    <script src="js/wow.min.js"></script>
+    <script>
+		 new WOW().init();
+
+    </script>
+    <!--//end-animate-->
+    <!----webfonts--->
+    <link href='http://fonts.googleapis.com/css?family=Cabin:400,400italic,500,500italic,600,600italic,700,700italic'
+          rel='stylesheet' type='text/css'>
+    <!---//webfonts--->
+    <!-- Meters graphs -->
+    <script src="js/jquery-1.10.2.min.js"></script>
+    <!-- Placed js at the end of the document so the pages load faster -->
+
+</head>
+
+<body class="sign-in-up">
+<section>
+    <div id="page-wrapper" class="sign-in-wrapper">
+        <div class="graphs">
+            <div class="sign-in-form">
+                <div class="sign-in-form-top">
+                    <a th:href="@{/}"><p>BookStore</p></a>
+                </div>
+                <div class="signin">
+                    <div for="fname" class="sign-u">
+                        <div class="sign-up1">
+                            <h4>Name* :</h4>
+                        </div>
+                        <div class="sign-up2">
+                            <form>
+                                <input type="text" id="fname" placeholder=" " required=""/>
+                            </form>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div for="femail" class="sign-u">
+                        <div class="sign-up1">
+                            <h4>Email* :</h4>
+                        </div>
+                        <div class="sign-up2">
+                            <form>
+                                <input type="text" id="femail" placeholder=" " required=""/>
+                            </form>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div for="fpass" class="sign-u">
+                        <div class="sign-up1">
+                            <h4>Password* :</h4>
+                        </div>
+                        <div class="sign-up2">
+                            <form>
+                                <input type="password" id="fpass" placeholder=" " required=""/>
+                            </form>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div for="frepass" class="sign-u">
+                        <div class="sign-up1">
+                            <h4>Re Password* :</h4>
+                        </div>
+                        <div class="sign-up2">
+                            <form>
+                                <input type="password" id="frepass" placeholder=" " required=""/>
+                            </form>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                    <input class="btn-register" type="submit" value="Đăng ký">
+                </div>
+                <div class="new_people">
+                    <a th:href="@{/}">Trở về trang chủ</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<footer th:replace="~{/fragment/header_admin :: footer}"></footer>
+<script src="js/jquery.nicescroll.js"></script>
+<script src="js/scripts.js"></script>
+<!-- Bootstrap Core JavaScript -->
+<script src="js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.9.0/sweetalert2.all.min.js"></script>
+<script>
+    $(document).ready(function() {
+    $(".btn-register").on("click", function () {
+        if ($('#fname').val().trim() === '' || $('#femail').val().trim() === '' || $('#fpass').val().trim() === '' || $('#frepass').val().trim() === '') {
+             swal('Không được để trống thông tin');
+            return ;
+        }
+
+        if (!isEmailValid($('#femail').val().trim())) {
+            swal('Email không đúng định dạng');
+            return;
+        }
+
+        if ($('#fpass').val().trim() !== $('#frepass').val().trim()) {
+            swal('Mật khẩu không trùng nhau');
+            return;
+        }
+
+
+        var data = {
+            name: $('#fname').val().trim(),
+            email: $('#femail').val().trim(),
+            password: $('#fpass').val().trim()
+        }
+
+        axios.post("/users/register", data).then(function(res){
+            NProgress.done();
+            if(res.data.success) {
+                dataLogin = {
+                    email: $('#femail').val().trim(),
+                    password: $('#fpass').val().trim()
+                };
+                axios.post("/users/login", dataLogin)
+                    .then(function () {
+                        swal("Đăng ký thành công");
+                        delay: 200;
+                        setTimeout(() => location.replace("/"), 200);
+                    })
+            } else {
+                swal(res.data.message);
+            }
+        }, function(err){
+            NProgress.done();
+            swal('Đã xảy ra lỗi');
+        })
+    });
+
+    function isEmailValid(email) {
+        var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+        return regex.test(email);
+    }
+});
+</script>>
+</body>
+</html>

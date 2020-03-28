@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Checkout</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#03a6f3">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:200,300,400,500,600,700,800,900" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="css/owl.carousel.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+<div th:replace="~{/fragment/header :: header}"></div>
+<div class="breadcrumb">
+    <div class="container">
+        <a class="breadcrumb-item" th:href="@{/}">Trang chủ</a>
+        <span class="breadcrumb-item active">Đặt hàng</span>
+    </div>
+</div>
+<section class="static about-sec">
+    <div class="container">
+        <h1>Đặt hàng</h1>
+        <div class="form">
+            <div class="row">
+                <div class="col-md-8">
+                    <label>Họ Tên</label>
+                    <input id="fname" th:value="${user.name}" placeholder="Họ tên">
+                    <span class="required-star">*</span>
+                </div>
+                <div class="col-md-8">
+                    <label>Địa chỉ</label>
+                    <input id="fadress" th:value="${user.address}" placeholder="Địa chỉ">
+                    <span class="required-star">*</span>
+                </div>
+                <div class="col-md-5">
+                    <label>Số điện thoại</label>
+                    <input id="fphone" th:value="${user.phone}" placeholder="Số điện thoại">
+                    <span class="required-star">*</span>
+                </div>
+            </div>
+            <div class="col-lg-8 col-md-12">
+                <button th:attr="userId=${user.getId()}" id="btn-checkout" class="btn black">Xác nhận</button>
+            </div>
+        </div>
+    </div>
+</section>
+<div class="footer" th:replace="/fragment/footer :: footer"></div>
+<script src="js/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/owl.carousel.min.js"></script>
+<script src="js/custom.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.9.0/sweetalert2.all.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+
+    $("#btn-checkout").on("click", function () {
+        if($('#fname').val().trim() === '' || $('#fadress').val().trim() === '' || $('#fphone').val().trim() === '') {
+                     swal('Không được để trống thông tin');
+                     return;
+                 }
+
+        var userId = $(this).attr("userId").trim();
+        var data = {
+            id: userId,
+            name: $('#fname').val().trim(),
+            address: $('#fadress').val().trim(),
+            phone: $('#fphone').val().trim()
+        }
+
+        NProgress.start();
+        axios.post("/api/checkout", data).then(function(res){
+            NProgress.done();
+            if(res.data.success) {
+                swal(res.data.message);
+                setTimeout(() => location.replace("/account"), 700);
+            } else {
+                swal(res.data.message)
+            }
+        }, function(err){
+            NProgress.done();
+            swal('Đã xảy ra lỗi');
+        });
+    });
+});
+
+</script>
+</body>
+</html>

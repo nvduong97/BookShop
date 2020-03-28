@@ -1,0 +1,143 @@
+﻿<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Book Store</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#03a6f3">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:200,300,400,500,600,700,800,900" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="css/owl.carousel.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+<div th:replace="~{/fragment/header :: header}"></div>
+<div class="breadcrumb">
+    <div class="container">
+        <a th:href="@{/}" class="breadcrumb-item">Trang chủ</a>
+        <span class="breadcrumb-item active">Giỏ hàng</span>
+    </div>
+</div>
+
+<section class="product-sec">
+    <div class="container">
+        <!--        <h1>Giỏ hàng</h1>-->
+        <div class="xs tabls">
+            <div class="bs-example4" data-example-id="simple-responsive-table">
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>IMAGE</th>
+                                <th>BOOK</th>
+                                <th>PRICE</th>
+                                <th>QUANTITY</th>
+                                <th>TOTAL</th>
+                                <th>REMOVE</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="cartDetail : ${cart.getCartDetails()}">
+                                <td><img style="max-width: 100px" th:src="@{${cartDetail.getBook().getImage()}}" alt="img"></td>
+                                <td th:text="${cartDetail.getBook().getName()}"></td>
+                                <td th:text="${#numbers.formatDecimal(cartDetail.getBook().getPrice(), 0, 'COMMA', 0, 'POINT') + '₫'}"></td>
+                                <td class="quantity">
+                                    <input class="change-amount" style="max-width: 50px" type="number" min="1" th:value=${cartDetail.amount} th:attr="cartDetailId=${cartDetail.id}">
+                                </td>
+                                <td th:text="${#numbers.formatDecimal(cartDetail.totalMoney, 0, 'COMMA', 0, 'POINT') + '₫'}"></td>
+                                <td>
+                                    <button class="gray-btn delete-cartDetail" th:attr="cartDetailId=${cartDetail.id}">REMOVE</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div><!-- /.table-responsive -->
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 slider">
+                <th:block th:if="${cart.getCartDetails() == null || cart.getTotalMoney() == 0}">
+                    <span class="name">GIỎ HÀNG CỦA BẠN ĐANG TRỐNG</span>
+                    <div class="btn-sec">
+                        <a th:href="@{/shop}">
+                            <button class="btn ">Tiếp tục mua sắm</button>
+                        </a>
+                    </div>
+                </th:block>
+                <th:block th:if="${cart.getTotalMoney() != 0}">
+                    <div class="btn-sec">
+                        <a th:href="@{/checkout}">
+                            <button class="btn ">Check out</button>
+                        </a>
+                    </div>
+                </th:block>
+            </div>
+            <div class="col-md-6 slider-content">
+                <ul>
+                    <li>
+                        <span class="name">TOTAL MONNEY</span><span class="clm">:</span>
+                        <span class="price final" th:text="${#numbers.formatDecimal(cart.totalMoney, 0, 'COMMA', 0, 'POINT') + '₫'}"></span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+<div class="footer" th:replace="/fragment/footer :: footer"></div>
+<script src="js/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/owl.carousel.min.js"></script>
+<script src="js/custom.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.9.0/sweetalert2.all.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+
+    $(".change-amount").change(function () {
+        dataCartProduct = {};
+        dataCartProduct.id = $(this).attr("cartDetailId");
+        dataCartProduct.amount = $(this).val();
+
+        NProgress.start();
+        var linkPut = "/cartDetail";
+        axios.put(linkPut, dataCartProduct).then(function (res) {
+            NProgress.done();
+            if (res.data.success) {
+                location.reload();
+            } else {
+                 location.reload();
+            }
+        }, function (err) {
+            NProgress.done();
+             location.reload();
+        });
+    });
+
+    $(".delete-cartDetail").on("click", function () {
+        var id = $(this).attr("cartDetailId");
+        NProgress.start();
+        var linkDelete = "/cartDetail/" + id;
+        axios.delete(linkDelete).then(function (res) {
+            NProgress.done();
+            if (res.data.success) {
+                location.reload();
+            } else {
+                location.reload();
+            }
+        }, function (err) {
+            NProgress.done();
+            location.reload();
+        });
+    })
+
+
+});
+</script>
+</body>
+
+</html>

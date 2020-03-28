@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Search</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#03a6f3">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:200,300,400,500,600,700,800,900" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="css/owl.carousel.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+    <div th:replace="~{/fragment/header :: header}"></div>
+    <div class="breadcrumb">
+        <div class="container">
+            <a th:href="@{/}" class="breadcrumb-item" href="index.html">Trang chủ</a>
+            <span class="breadcrumb-item active">Tìm kiếm</span>
+        </div>
+    </div>
+    <section class="static about-sec">
+        <div class="container">
+            <h2 th:text="${'Kết quả tìm kiếm cho: ' + keyword}"></h2>
+            <div class="recent-book-sec">
+                <div class="row">
+                    <div class="col-md-3" th:each="book : ${books}">
+                        <div class="item">
+                            <a th:href="${'/book/'+ book.id}"><img th:src="@{${book.image}}" alt="img" /></a>
+                            <h3 th:text="${book.name}"></h3>
+                            <h6><span class="price" th:text="${#numbers.formatDecimal(book.price, 0, 'COMMA', 0, 'POINT') + ' ₫'}"></span></h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <nav th:if="${books.size()>0}">
+                <ul class="pagination pagination-lg">
+                    <th:block th:each="i: ${#numbers.sequence(0, page.totalPages - 1)}">
+                        <li th:if="${page.number == i}" aria-current="page">
+                            <a class="page-link" th:text="${i+1}"></a>
+                        </li>
+                        <li class="page-item" th:unless="${page.number == i}">
+                            <a class="page-link" th:text="${i+1}" th:href="@{''(page=${i})}"></a>
+                        </li>
+                    </th:block>
+                </ul>
+            </nav>
+
+        </div>
+    </section>
+    <div class="footer" th:replace="/fragment/footer :: footer"></div>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/owl.carousel.min.js"></script>
+    <script src="js/custom.js"></script>
+</body>
+
+</html>

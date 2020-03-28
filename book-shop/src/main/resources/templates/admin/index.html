@@ -1,0 +1,393 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{/fragment/header_admin :: head}"></head>
+
+<body class="sticky-header left-side-collapsed" onload="initMap()">
+<div th:replace="~{/fragment/header_admin :: header}"></div>
+<section>
+    <!-- main content start-->
+    <div class="main-content">
+        <!-- //header-ends -->
+        <div id="page-wrapper">
+            <div class="graphs">
+                <h3 class="blank1">Danh sách sách</h3>
+                <button type="button" class="btn btn-primary" id="btn-newBook" data-toggle="modal"
+                        style="margin-bottom: 20px">
+                    Thêm mới sách
+                </button>
+
+                <div class="xs tabls">
+                    <div class="bs-example4" data-example-id="contextual-table">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th>Mã sách</th>
+                                <th>Tên</th>
+                                <th>Số lượng</th>
+                                <th>Giá</th>
+                                <th>Ngày tạo</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr class="active" th:each="book : ${books}">
+                                <td th:text="${book.getId()}"></td>
+                                <td th:text="${book.getName()}"></td>
+                                <td th:text="${book.getAmount()}"></td>
+                                <td th:text="${#numbers.formatDecimal(book.getPrice(), 0, 'COMMA', 0, 'POINT') + ' ₫'}"></td>
+                                <td th:text="${book.getCreatedDate()}"></td>
+                                <th>
+                                    <button type="button" class="btn btn-xs btn-danger btn-deleteBook"
+                                            th:attr="bookId=${book.getId()}">Delete
+                                    </button>
+                                    <button type="button" class="btn btn-xs btn-danger btn-updateBook"
+                                            th:attr="bookId=${book.getId()}">Update
+                                    </button>
+                                </th>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <nav th:if="${books.size()>0}">
+                <ul class="pagination pagination-lg">
+                    <th:block th:each="i: ${#numbers.sequence(0, page.totalPages - 1)}">
+                        <li th:if="${page.number == i}" aria-current="page">
+                            <a class="page-link" th:text="${i+1}"></a>
+                        </li>
+                        <li class="page-item" th:unless="${page.number == i}">
+                            <!--                            <a class="page-link" th:text="${i+1}" th:href="@{''(page=${i})}"></a>-->
+                            <a class="page-link" th:text="${i+1}" th:href="@{''(
+                                                                                   page=${i},
+                                                                                   size= ${param.size},
+                                                                                   keyword =${param.keyword}
+                                                                                   )}">
+
+                            </a>
+                        </li>
+                    </th:block>
+                </ul>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Modal Add Book -->
+    <div class="modal fade" id="modal-add-book" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Thêm mới sách</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="tab-content">
+                        <div class="tab-pane active form-horizontal">
+                            <div class="form-group">
+                                <label for="name" class="col-sm-2 control-label">Tên sách</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control1" id="name"
+                                           placeholder="Book's name">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="amount" class="col-sm-2 control-label">Số lượng</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control1" id="amount"
+                                           placeholder="Amount">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="price" class="col-sm-2 control-label label-input-sm">Giá</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control1 input-sm" id="price"
+                                           placeholder="Price">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Nhà Xuất Bản</label>
+                                <div class="col-sm-10"><select id="publisher" class="form-control1">
+                                    <option th:each="publisher : ${publisherDtos}"
+                                            th:value="${publisher.id}"
+                                            th:text="${publisher.name}"></option>
+                                </select></div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Tác Giả</label>
+                                <div class="col-sm-10"><select id="author" class="form-control1">
+                                    <option th:each="author : ${authorDtos}"
+                                            th:value="${author.id}"
+                                            th:text="${author.name}"></option>
+                                </select></div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="image" class="col-sm-2 control-label">Ảnh</label>
+                                <div class="col-sm-2">
+                                    <input type="file" id="image">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label"></label>
+                                <div class="col-sm-2">
+                                    <img style="max-width: 200px; height: auto"
+                                         src="https://www.vietnamprintpack.com/images/default.jpg"
+                                         class="product-main-image">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                    <button type="submit" id="btnSave-addBook" class="btn btn-primary">Lưu</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal Add Book end-->
+
+    <!-- Modal update Book -->
+    <div class="modal fade" id="modal-update-book" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Cập nhật sách</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="tab-content">
+                        <div class="tab-pane active form-horizontal">
+                            <div class="form-group">
+                                <label for="nameUpdate" class="col-sm-2 control-label">Tên sách</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control1" id="nameUpdate"
+                                           placeholder="Book's name">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="amountUpdate" class="col-sm-2 control-label">Số lượng</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control1" id="amountUpdate"
+                                           placeholder="Amount">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="priceUpdate" class="col-sm-2 control-label label-input-sm">Giá</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control1 input-sm" id="priceUpdate"
+                                           placeholder="Price">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Nhà Xuất Bản</label>
+                                <div class="col-sm-10"><select id="publisherUpdate" class="form-control1">
+                                    <option th:each="publisher : ${publisherDtos}"
+                                            th:value="${publisher.id}"
+                                            th:text="${publisher.name}"></option>
+                                </select></div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Tác Giả</label>
+                                <div class="col-sm-10"><select id="authorUpdate" class="form-control1">
+                                    <option th:each="author : ${authorDtos}"
+                                            th:value="${author.id}"
+                                            th:text="${author.name}"></option>
+                                </select></div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="fileUpdate" class="col-sm-2 control-label">Ảnh</label>
+                                <div class="col-sm-2">
+                                    <input type="file" id="fileUpdate">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label"></label>
+                                <div class="col-sm-2">
+                                    <img style="max-width: 200px; height: auto"
+                                         src="https://www.vietnamprintpack.com/images/default.jpg"
+                                         class="product-main-image">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                    <button type="submit" id="btnSave-updateBook" class="btn btn-primary">Lưu</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal update Book end-->
+
+</section>
+
+<footer th:replace="~{/fragment/header_admin :: footer}"></footer>
+
+<script src="admin/js/jquery.nicescroll.js"></script>
+<script src="admin/js/scripts.js"></script>
+<!-- Bootstrap Core JavaScript -->
+<script src="admin/js/bootstrap.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.9.0/sweetalert2.all.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+    var book = {};
+    var bookId;
+
+    $("#btn-newBook").on("click", function () {
+        $("#modal-add-book").modal();
+    });
+
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                // $('#preview-product-img').attr('src', e.target.result);
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    $("#image").change(function() {
+        readURL(this);
+        var formData = new FormData();
+        NProgress.start();
+        formData.append('file', $("#image")[0].files[0]);
+        axios.post("/books/upload", formData).then(function(res){
+            NProgress.done();
+            if(res.data.success) {
+                $('.product-main-image').attr('src', res.data.data);
+            }
+        }, function(err){
+            NProgress.done();
+        });
+    });
+
+    $("#btnSave-addBook").on("click", function () {
+        if ($("#name").val().trim() === '' || $("#amount").val().trim() === '' || $("#price").val().trim() === '') {
+            swal('Không được để trống thông tin');
+            return;
+        }
+
+        book.name = $('#name').val();
+        book.amount = $('#amount').val();
+        book.price = $("#price").val();
+        book.publisherId = $('#publisher').val()
+        book.authorId = $('#author').val()
+        book.image = $('.product-main-image').attr('src');
+
+        NProgress.start();
+        var linkPost = "/books";
+        axios.post(linkPost, book).then(function(res){
+            NProgress.done();
+            if(res.data.success) {
+                swal( res.data.message);
+                location.reload();
+            } else {
+                swal( res.data.message);
+            }
+        }, function(err){
+            NProgress.done();
+            swal('Đã xảy ra lỗi');
+        })
+    });
+
+
+    $("#fileUpdate").change(function() {
+        readURL(this);
+        var formData = new FormData();
+        NProgress.start();
+        formData.append('file', $("#fileUpdate")[0].files[0]);
+        axios.post("/books/upload", formData).then(function(res){
+            NProgress.done();
+            if(res.data.success) {
+                $('.product-main-image').attr('src', res.data.data);
+            }
+        }, function(err){
+            NProgress.done();
+        });
+    });
+
+    $(".btn-updateBook").on("click", function () {
+        bookId = $(this).attr("bookId");
+        NProgress.start();
+        var link = "/books/" + bookId;
+        axios.get(link).then(function(res){
+            NProgress.done();
+            $("#nameUpdate").val(res.data.name);
+            $("#amountUpdate").val(res.data.amount);
+            $("#priceUpdate").val(res.data.price);
+            $("#publisherUpdate").val(res.data.publisherId);
+            $("#authorUpdate").val(res.data.authorId);
+            $('.product-main-image').attr('src', res.data.image);
+            $("#modal-update-book").modal();
+        }, function(err){
+            NProgress.done();
+            swal('Đã xảy ra lỗi');
+        })
+    });
+
+    $("#btnSave-updateBook").on("click", function () {
+        book ={};
+        if ($("#nameUpdate").val().trim() === '' || $("#amountUpdate").val().trim() === '' || $("#priceUpdate").val().trim() === '') {
+            swal('Không được để trống thông tin');
+            return;
+        }
+
+        book.name = $('#nameUpdate').val();
+        book.amount = $('#amountUpdate').val();
+        book.price = $("#priceUpdate").val();
+        book.publisherId = $('#publisherUpdate').val()
+        book.authorId = $('#authorUpdate').val()
+        book.image = $('.product-main-image').attr('src');
+
+        NProgress.start();
+        var link = "/books/" + bookId;
+        axios.put(link, book).then(function(res){
+            NProgress.done();
+            swal('Cập nhật thành công');
+            setTimeout(() => location.reload(), 500);
+        }, function(err){
+            NProgress.done();
+            swal('Đã xảy ra lỗi');
+        })
+    });
+
+    $(".btn-deleteBook").on("click", function () {
+        bookId = $(this).attr("bookId");
+        swal({
+            title: 'Xác nhận',
+            showCancelButton: true
+        }).then(function (result) {
+            if (result.value) {
+                NProgress.start();
+                var link = "/books/" + bookId;
+                axios.delete(link).then(function (res) {
+                    NProgress.done();
+                    swal(res.data);
+                    location.reload();
+                }, function (err) {
+                    NProgress.done();
+                    swal(res.data);
+                })
+            }
+        })
+    });
+});
+
+</script>
+
+</body>
+</html>
