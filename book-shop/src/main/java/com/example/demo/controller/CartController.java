@@ -62,37 +62,29 @@ public class CartController {
     public ResponseResult createCart(@Valid @RequestBody CreateCartReq req) {
         ResponseResult result = new ResponseResult();
         try {
-            if (!SecurityContextHolder.getContext().getAuthentication().getPrincipal().equals("anonymousUser")) {
-                CustomUserDetails userDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-                User user = userDetails.getUser();
-                Cart cart = cartService.findByUserIdStatus(user.getId());
-                if (cart == null) {
-                    req.setUser(user);
-                    cart = cartService.createCart(req);
-                    CreateCartDetailReq createCartReq = new CreateCartDetailReq(req.getAmount(), 0 ,cart, req.getBookId());
-                    cartDetailService.createCart(createCartReq);
-                }else {
-                    CartDetail cartDetail = cartDetailService.getCartByBookIdAndCartID(req.getBookId(), cart.getId());
-                    if(cartDetail != null){
-                        int amount = cartDetail.getAmount() + req.getAmount();
-                        cartDetailService.updateCartDetail(new UpdateCartDetailReq(amount, cartDetail.getId()));
-                    }else{
-                        CreateCartDetailReq createCartReq = new CreateCartDetailReq(req.getAmount(), 0 ,cart, req.getBookId());
-                        cartDetailService.createCart(createCartReq);
-                    }
+            CustomUserDetails userDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            User user = userDetails.getUser();
+            Cart cart = cartService.findCartByUser(user.getId());
+            if (cart == null) {
+                req.setUser(user);
+                cart = cartService.createCart(req);
+                CreateCartDetailReq createCartReq = new CreateCartDetailReq(req.getAmount(), 0, cart, req.getBookId());
+                cartDetailService.createCartDetail(createCartReq);
+            } else {
+                CartDetail cartDetail = cartDetailService.findDetailCartByBookIdAndCartId(req.getBookId(), cart.getId());
+                if (cartDetail != null) {
+                    int amount = cartDetail.getAmount() + req.getAmount();
+                    cartDetailService.updateCartDetail(new UpdateCartDetailReq(amount, cartDetail.getId()));
+                } else {
+                    CreateCartDetailReq createCartReq = new CreateCartDetailReq(req.getAmount(), 0, cart, req.getBookId());
+                    cartDetailService.createCartDetail(createCartReq);
                 }
-                cart = cartService.updateCart(cart.getId());
-                result.setMessage("Đã thêm vào giỏ hàng!");
-                result.setSuccess(true);
-                return result;
-            }else{
-                result.setMessage("Bạn cần đăng nhập!");
-                result.setSuccess(false);
-                return result;
             }
+            cart = cartService.updateCart(cart.getId());
+            result.setMessage("Đã thêm vào giỏ hàng!");
+            result.setSuccess(true);
         } catch (Exception e) {
-            e.printStackTrace();
-            result.setMessage("Đã xảy ra lỗi!");
+            result.setMessage("Bạn cần đăng nhập!");
             result.setSuccess(false);
         }
         return result;
@@ -107,7 +99,7 @@ public class CartController {
     @DeleteMapping("/carts/{id}")
     public ResponseEntity<?> deleteCart(@PathVariable int id) {
         cartService.deleteCart(id);
-        return ResponseEntity.ok("Delete success");
+        return ResponseEntity.ok("Xóa thành công");
     }
 
     @PostMapping("/checkout")

@@ -73,7 +73,7 @@ public class RequestUserController {
         if (!SecurityContextHolder.getContext().getAuthentication().getPrincipal().equals("anonymousUser")) {
             CustomUserDetails userDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             user = userDetails.getUser();
-            cart = cartService.findByUserIdStatus(user.getId());
+            cart = cartService.findCartByUser(user.getId());
             if(cart == null)
                 cart = new Cart();
         }

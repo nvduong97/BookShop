@@ -41,7 +41,7 @@ public class CartDetailServiceImpl implements CartDetailService {
     }
 
     @Override
-    public CartDetail createCart(CreateCartDetailReq req) {
+    public CartDetail createCartDetail(CreateCartDetailReq req) {
         Book book = bookService.getBook(req.getBookId());
         int totalMoney = book.getPrice()*req.getAmount();
 
@@ -50,12 +50,13 @@ public class CartDetailServiceImpl implements CartDetailService {
         cart.setAmount(req.getAmount());
         cart.setBook(book);
         cart.setCart(req.getCart());
+
         cartDetailRepository.save(cart);
         return cart;
     }
 
     @Override
-    public CartDetail getCartById(int id) {
+    public CartDetail findCartDetailById(int id) {
         Optional<CartDetail> cart = cartDetailRepository.findById(id);
         if(cart.equals(null)){
             throw new NotFoundException("Cart Not found");
@@ -64,19 +65,19 @@ public class CartDetailServiceImpl implements CartDetailService {
     }
 
     @Override
-    public CartDetail getCartByBookIdAndCartID(int bookId, int cartId) {
+    public CartDetail findDetailCartByBookIdAndCartId(int bookId, int cartId) {
         CartDetail cartDetail = cartDetailRepository.findCartByBookIdAndCartID(bookId,cartId);
         return cartDetail;
     }
 
     @Override
-    public List<CartDetail> getCartDetails(int id) {
+    public List<CartDetail> findCartDetailsByCartId(int id) {
         List<CartDetail> carts = cartDetailRepository.findByCartId(id);
         return carts;
     }
 
     @Override
-    public List<CartDetail> getCarts() {
+    public List<CartDetail> getCartDetails() {
         List<CartDetail> carts = cartDetailRepository.findAll();
         return carts;
     }

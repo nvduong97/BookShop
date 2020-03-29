@@ -24,5 +24,5 @@ public class CreateCartReq {
 
     private User user;
 
-    private CartDetail cartDetails;
+    private CreateCartDetailReq cartDetails;
 }

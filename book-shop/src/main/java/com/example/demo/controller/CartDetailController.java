@@ -25,20 +25,20 @@ public class CartDetailController {
 
     @GetMapping("")
     public ResponseEntity<?> getCarts() {
-        List<CartDetail> result = cartDetailService.getCarts();
+        List<CartDetail> result = cartDetailService.getCartDetails();
 
         return ResponseEntity.status(HttpStatus.OK).body(result);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getCartById(@PathVariable int id) {
-        CartDetail result = cartDetailService.getCartById(id);
+        CartDetail result = cartDetailService.findCartDetailById(id);
         return ResponseEntity.ok(result);
     }
 
     @PostMapping("")
     public ResponseEntity<?> createCart(@Valid @RequestBody CreateCartDetailReq req) {
-        CartDetail result = cartDetailService.createCart(req);
+        CartDetail result = cartDetailService.createCartDetail(req);
         return ResponseEntity.ok(result);
     }
 
@@ -63,7 +63,7 @@ public class CartDetailController {
     public ResponseResult deleteCart(@PathVariable int id) {
         ResponseResult result = new ResponseResult();
         try {
-            int cartId = cartDetailService.getCartById(id).getCart().getId();
+            int cartId = cartDetailService.findCartDetailById(id).getCart().getId();
             cartDetailService.deleteCart(id);
             cartService.updateCart(cartId);
             result.setMessage("Cập nhật thành công");

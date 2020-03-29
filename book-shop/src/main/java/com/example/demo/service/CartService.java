@@ -11,7 +11,7 @@ import java.util.List;
 
 public interface CartService {
 
-    Cart findByUserIdStatus(int userId);
+    Cart findCartByUser(int userId);
 
     public Page<Cart> getCartPage(Pageable pageable);
 

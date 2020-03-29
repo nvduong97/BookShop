@@ -1,34 +1,20 @@
 package com.example.demo.controller;
 
-import com.example.demo.entity.Book;
 import com.example.demo.model.dto.BookDto;
 import com.example.demo.model.dto.ResponseResult;
-import com.example.demo.model.dto.UserDto;
-import com.example.demo.model.mapper.BookMapper;
 import com.example.demo.model.request.CreateBookReq;
 import com.example.demo.model.request.UpdateBookReq;
-import com.example.demo.model.request.UpdateUserReq;
-import com.example.demo.model.request.UploadFile;
 import com.example.demo.service.BookService;
 import com.example.demo.service.FileStorageService;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.List;
 
 @RequestMapping("/books")
 @RestController
@@ -78,22 +64,6 @@ public class BookController {
         }
         return ResponseEntity.ok(result);
     }
-
-
-//    @GetMapping("")
-//    public String getBookByName(Model model,
-//                                @RequestParam(required = false, defaultValue = "") String keyword,
-//                                @RequestParam(name = "page", required = false, defaultValue = "0") Integer page,
-//                                @RequestParam(name = "size", required = false, defaultValue = "20") Integer size) {
-//        List<BookDto> result = new ArrayList<>();
-//        Page<Book> books = bookService.getBooksByName(keyword.trim(), PageRequest.of(page, size));
-//        for (Book book: books.getContent()) {
-//            result.add(BookMapper.toBookDto(book));
-//        }
-//        model.addAttribute("page", books);
-//        model.addAttribute("books", result);
-//        return "products";
-//    }
 
     @PostMapping("/upload")
     public ResponseEntity<?> uploadImage(@RequestParam("file") MultipartFile file) {

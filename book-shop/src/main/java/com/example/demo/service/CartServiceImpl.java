@@ -29,7 +29,7 @@ public class CartServiceImpl implements CartService {
 
 
     @Override
-    public Cart findByUserIdStatus(int userId) {
+    public Cart findCartByUser(int userId) {
         Cart cart = cartRepository.findByUserName(userId);
         return cart;
     }
@@ -60,7 +60,7 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public Cart updateCart(int id) {
-        List<CartDetail> list = cartDetailService.getCartDetails(id);
+        List<CartDetail> list = cartDetailService.findCartDetailsByCartId(id);
         int money = 0;
         for (CartDetail cartDetail: list) {
             money += cartDetail.getTotalMoney();
@@ -99,14 +99,13 @@ public class CartServiceImpl implements CartService {
     public Cart getCartById(int id) {
         Optional<Cart> cart = cartRepository.findById(id);
         if(cart.equals(null)){
-            throw new NotFoundException("Cart Not found");
+            throw new NotFoundException("Giỏ hàng không tồn tại");
         }
         return cart.get();
     }
 
     @Override
     public Boolean updateCartStatus(int id) {
-//        Cart cart = cartRepository.findById(id).get();
         Cart cart = cartRepository.findByUserName(id);
         cart.setStatus(true);
         cartRepository.save(cart);

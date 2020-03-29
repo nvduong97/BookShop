@@ -65,6 +65,11 @@ $(document).ready(function() {
                      return;
                  }
 
+        if (!isPhoneNumberValid($('#fphone').val().trim())) {
+            swal('Số điện thoại sai định dạng');
+            return;
+        }
+
         var userId = $(this).attr("userId").trim();
         var data = {
             id: userId,
@@ -87,6 +92,11 @@ $(document).ready(function() {
             swal('Đã xảy ra lỗi');
         });
     });
+
+    function isPhoneNumberValid(number) {
+        var regex = /^(09|01[2|6|8|9])+([0-9]{8})\b$/;
+        return regex.test(number);
+    }
 });
 
 </script>

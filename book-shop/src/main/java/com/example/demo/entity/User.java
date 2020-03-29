@@ -47,9 +47,6 @@ public class User {
     private String phone;
 
     @OneToMany(mappedBy="user")
-    private List<Bill> bills;
-
-    @OneToMany(mappedBy="user")
     private List<Cart> carts;
 
     @JsonIgnore

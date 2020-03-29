@@ -139,8 +139,20 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         axios.post("/users/register", data).then(function(res){
             NProgress.done();
             if(res.data.success) {
-                swal(res.data.message);
-                setTimeout(() => location.replace("/"), 100);
+                 var dataLogin = {
+                    email: $('#femail').val().trim(),
+                    password: $('#fpass').val().trim()
+                }
+                axios.post("/users/login", dataLogin).then(function(res){
+                    NProgress.done();
+                    if(res.data.success) {
+                        swal('Đăng ký thành công');
+                        setTimeout(() => location.replace("/"), 100);
+                    }
+                }, function(err){
+                    NProgress.done();
+                    swal('Không thể đăng nhập');
+                })
             } else {
                 swal(res.data.message);
             }
@@ -149,6 +161,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
             swal('Đã xảy ra lỗi');
         })
     });
+
 
     function isEmailValid(email) {
         var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;

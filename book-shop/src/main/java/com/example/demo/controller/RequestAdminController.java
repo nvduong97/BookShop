@@ -37,18 +37,6 @@ public class RequestAdminController {
     @Autowired
     CartService cartService;
 
-
-//    @GetMapping("/admin")
-//    public String admin(Model model,
-//                        @RequestParam(name = "page", required = false, defaultValue = "0") Integer page,
-//                        @RequestParam(name = "size", required = false, defaultValue = "10") Integer size) {
-//        Pageable pageable = PageRequest.of(page, size);
-//        Page<Book> result = bookService.getListBook(pageable);
-//        model.addAttribute("page", result);
-//        model.addAttribute("books", result.getContent());
-//        return "/admin/index";
-//    }
-
     @GetMapping("/admin")
     public String getBookByName(Model model,
                                 @RequestParam(required = false, defaultValue = "") String keyword,
@@ -66,28 +54,6 @@ public class RequestAdminController {
         return "/admin/index";
     }
 
-    @GetMapping("/admin/user")
-    public String user(Model model){
-//        List<AuthorDto> authorDtos = authorService.getAuthors();
-//        model.addAttribute("authorDtos", authorDtos);
-//
-//        List<PublisherDto> publisherDtos = publisherService.getPublishers();
-//        model.addAttribute("publisherDtos", publisherDtos);
-        return "/admin/user";
-    }
-//
-//    @GetMapping("/admin/update")
-//    public String admin(Model model, @RequestParam(required = false) Integer id) {
-//        List<AuthorDto> authorDtos = authorService.getAuthors();
-//        List<PublisherDto> publisherDtos = publisherService.getPublishers();
-//        BookDto book = bookService.getBookById(id);
-//
-//        book.setId(id);
-//        model.addAttribute("authorDtos", authorDtos);
-//        model.addAttribute("publisherDtos", publisherDtos);
-//        model.addAttribute("book", book);
-//        return "/admin/update";
-//    }
 
     @GetMapping("/admin/orderDetail")
     public String orderDetail(Model model, @RequestParam(required = false) Integer id) {

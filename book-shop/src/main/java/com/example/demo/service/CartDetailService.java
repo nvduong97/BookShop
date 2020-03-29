@@ -13,13 +13,13 @@ public interface CartDetailService {
 
     CartDetail updateCartDetail(UpdateCartDetailReq req);
 
-    CartDetail createCart(CreateCartDetailReq req);
+    CartDetail createCartDetail(CreateCartDetailReq req);
 
-    CartDetail getCartById(int id);
+    CartDetail findCartDetailById(int id);
 
-    CartDetail getCartByBookIdAndCartID(int bookId, int cartId);
+    CartDetail findDetailCartByBookIdAndCartId(int bookId, int cartId);
 
-    List<CartDetail> getCartDetails(int id);
+    List<CartDetail> findCartDetailsByCartId(int id);
 
-    List<CartDetail> getCarts();
+    List<CartDetail> getCartDetails();
 }

@@ -99,13 +99,19 @@
     $(document).ready(function () {
 
     $(".change-amount").change(function () {
-        dataCartProduct = {};
-        dataCartProduct.id = $(this).attr("cartDetailId");
-        dataCartProduct.amount = $(this).val();
+
+        data = {};
+        data.id = $(this).attr("cartDetailId");
+        data.amount = $(this).val();
+
+<!--        if (!isNumberValid($('data.amount'))) {-->
+<!--            swal('Số lượng phải lớn hơn 0');-->
+<!--            return;-->
+<!--        }-->
 
         NProgress.start();
         var linkPut = "/cartDetail";
-        axios.put(linkPut, dataCartProduct).then(function (res) {
+        axios.put(linkPut, data).then(function (res) {
             NProgress.done();
             if (res.data.success) {
                 location.reload();
@@ -133,9 +139,12 @@
             NProgress.done();
             location.reload();
         });
-    })
+    });
 
-
+<!--    function isNumberValid(number) {-->
+<!--        var regex = /^\d+$/;-->
+<!--        return regex.test(number);-->
+<!--    }-->
 });
 </script>
 </body>

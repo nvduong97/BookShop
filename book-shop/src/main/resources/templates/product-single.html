@@ -188,13 +188,19 @@
 $(document).ready(function() {
 
     $(".add-to-cart").on("click", function () {
-        var dataCart = {};
+
+        var data = {};
         var bookId = $(this).attr("bookId");
-        dataCart.amount = document.getElementById('qty').value;
-        dataCart.bookId = bookId;
+        data.amount = document.getElementById('qty').value;
+        data.bookId = bookId;
+
+<!--        if (!isNumberValid($('data.amount'))) {-->
+<!--            swal('Số lượng phải lớn hơn 0');-->
+<!--            return;-->
+<!--        }-->
 
         NProgress.start();
-        axios.post("/api/carts", dataCart).then(function(res){
+        axios.post("/api/carts", data).then(function(res){
             NProgress.done();
             if(res.data.success) {
                 swal(res.data.message)
@@ -206,6 +212,11 @@ $(document).ready(function() {
             swal('Đã xảy ra lỗi');
         });
     });
+
+    function isNumberValid(number) {
+<!--        var regex = /^\d+$/;-->
+<!--        return regex.test(number);-->
+    }
 });
 
 </script>
