@@ -21,7 +21,7 @@ Website bán sách.
 # 3. Hướng dẫn cài đặt và chạy trên môi trường phát triển
 - Clone repo: https://github.com/nvduong97/BookShop
 - Cài đặt Xampp với:
-  - Database: bookshop (https://github.com/nvduong97/BookShop/blob/master/bookShop.sql)
+  - Database: bookshop
   - Username: root
   - Password:
 - IDE: Intellij Community Version
