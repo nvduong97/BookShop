@@ -135,6 +135,11 @@ public class RequestUserController {
         return "products";
     }
 
+    @GetMapping("/403")
+    public String error(){
+        return "admin/blank_page";
+    }
+
     private void isUser(Model model) {
         if (!SecurityContextHolder.getContext().getAuthentication().getPrincipal().equals("anonymousUser")) {
             CustomUserDetails user = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
