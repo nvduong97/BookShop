@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{/fragment/header_admin :: head}"></head>
 
 <body class="sticky-header left-side-collapsed" onload="initMap()">
@@ -58,7 +58,6 @@
                             <a class="page-link" th:text="${i+1}"></a>
                         </li>
                         <li class="page-item" th:unless="${page.number == i}">
-                            <!--                            <a class="page-link" th:text="${i+1}" th:href="@{''(page=${i})}"></a>-->
                             <a class="page-link" th:text="${i+1}" th:href="@{''(
                                                                                    page=${i},
                                                                                    size= ${param.size},
@@ -74,51 +73,46 @@
     </div>
 
     <!-- Modal Add Book -->
-    <div class="modal fade" id="modal-add-book" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-         aria-hidden="true">
-        <div class="modal-dialog" role="document">
+    <div class="modal fade bd-example-modal-lg modal-add-book" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title">Thêm mới sách</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
                 </div>
                 <div class="modal-body">
                     <div class="tab-content">
                         <div class="tab-pane active form-horizontal">
                             <div class="form-group">
-                                <label for="name" class="col-sm-2 control-label">Tên sách</label>
-                                <div class="col-sm-10">
+                                <label for="name" class="col-sm-2 control-label">Tên sách *</label>
+                                <div class="col-sm-8">
                                     <input type="text" class="form-control1" id="name"
-                                           placeholder="Book's name">
+                                           placeholder="nhập tên sách">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="amount" class="col-sm-2 control-label">Số lượng</label>
-                                <div class="col-sm-10">
-                                    <input type="text" class="form-control1" id="amount"
-                                           placeholder="Amount">
+                                <label for="amount" class="col-sm-2 control-label">Số lượng *</label>
+                                <div class="col-sm-8">
+                                    <input class="form-control1" id="amount" type="number" min="1" placeholder="nhập số">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="price" class="col-sm-2 control-label label-input-sm">Giá</label>
-                                <div class="col-sm-10">
-                                    <input type="text" class="form-control1 input-sm" id="price"
-                                           placeholder="Price">
+                                <label for="price" class="col-sm-2 control-label label-input-sm">Giá *</label>
+                                <div class="col-sm-8">
+                                    <input class="form-control1 input-sm" id="price" type="number" min="1"
+                                           placeholder="nhập số">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-2 control-label">Nhà Xuất Bản</label>
-                                <div class="col-sm-10"><select id="publisher" class="form-control1">
+                                <label class="col-sm-2 control-label">Nhà Xuất Bản *</label>
+                                <div class="col-sm-8"><select id="publisher" class="form-control1">
                                     <option th:each="publisher : ${publisherDtos}"
                                             th:value="${publisher.id}"
                                             th:text="${publisher.name}"></option>
                                 </select></div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-2 control-label">Tác Giả</label>
-                                <div class="col-sm-10"><select id="author" class="form-control1">
+                                <label class="col-sm-2 control-label">Tác Giả *</label>
+                                <div class="col-sm-8"><select id="author" class="form-control1">
                                     <option th:each="author : ${authorDtos}"
                                             th:value="${author.id}"
                                             th:text="${author.name}"></option>
@@ -152,42 +146,36 @@
     <!-- Modal Add Book end-->
 
     <!-- Modal update Book -->
-    <div class="modal fade" id="modal-update-book" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-         aria-hidden="true">
-        <div class="modal-dialog" role="document">
+    <div class="modal fade bd-example-modal-lg modal-update-book" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title">Cập nhật sách</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
                 </div>
                 <div class="modal-body">
                     <div class="tab-content">
                         <div class="tab-pane active form-horizontal">
                             <div class="form-group">
-                                <label for="nameUpdate" class="col-sm-2 control-label">Tên sách</label>
+                                <label for="nameUpdate" class="col-sm-2 control-label">Tên sách *</label>
                                 <div class="col-sm-10">
                                     <input type="text" class="form-control1" id="nameUpdate"
-                                           placeholder="Book's name">
+                                           placeholder="nhập tên sách">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="amountUpdate" class="col-sm-2 control-label">Số lượng</label>
+                                <label for="amountUpdate" class="col-sm-2 control-label">Số lượng *</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control1" id="amountUpdate"
-                                           placeholder="Amount">
+                                    <input class="form-control1" id="amountUpdate" type="number" min="1" placeholder="nhập số">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="priceUpdate" class="col-sm-2 control-label label-input-sm">Giá</label>
+                                <label for="priceUpdate" class="col-sm-2 control-label label-input-sm">Giá *</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control1 input-sm" id="priceUpdate"
-                                           placeholder="Price">
+                                    <input class="form-control1 input-sm" id="priceUpdate" type="number" min="1" placeholder="nhập số">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-2 control-label">Nhà Xuất Bản</label>
+                                <label class="col-sm-2 control-label">Nhà Xuất Bản *</label>
                                 <div class="col-sm-10"><select id="publisherUpdate" class="form-control1">
                                     <option th:each="publisher : ${publisherDtos}"
                                             th:value="${publisher.id}"
@@ -195,7 +183,7 @@
                                 </select></div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-2 control-label">Tác Giả</label>
+                                <label class="col-sm-2 control-label">Tác Giả *</label>
                                 <div class="col-sm-10"><select id="authorUpdate" class="form-control1">
                                     <option th:each="author : ${authorDtos}"
                                             th:value="${author.id}"
@@ -247,7 +235,11 @@ $(document).ready(function() {
     var bookId;
 
     $("#btn-newBook").on("click", function () {
-        $("#modal-add-book").modal();
+        $("#name").val("");
+        $("#amount").val("");
+        $("#price").val("");
+        $('.product-main-image').attr('src', 'https://www.vietnamprintpack.com/images/default.jpg');
+        $(".modal-add-book").modal();
     });
 
     function readURL(input) {
@@ -278,6 +270,11 @@ $(document).ready(function() {
     $("#btnSave-addBook").on("click", function () {
         if ($("#name").val().trim() === '' || $("#amount").val().trim() === '' || $("#price").val().trim() === '') {
             swal('Không được để trống thông tin');
+            return;
+        }
+
+        if (!isNumberValid($('#amount').val().trim()) || !isNumberValid($('#price').val().trim())) {
+            swal('Số lượng và giá phải lớn hơn 0');
             return;
         }
 
@@ -332,7 +329,7 @@ $(document).ready(function() {
             $("#publisherUpdate").val(res.data.publisherId);
             $("#authorUpdate").val(res.data.authorId);
             $('.product-main-image').attr('src', res.data.image);
-            $("#modal-update-book").modal();
+            $(".modal-update-book").modal();
         }, function(err){
             NProgress.done();
             swal('Đã xảy ra lỗi');
@@ -343,6 +340,11 @@ $(document).ready(function() {
         book ={};
         if ($("#nameUpdate").val().trim() === '' || $("#amountUpdate").val().trim() === '' || $("#priceUpdate").val().trim() === '') {
             swal('Không được để trống thông tin');
+            return;
+        }
+
+        if (!isNumberValid($('#amountUpdate').val().trim()) || !isNumberValid($('#priceUpdate').val().trim())) {
+            swal('Số lượng và giá phải lớn hơn 0');
             return;
         }
 
@@ -385,6 +387,11 @@ $(document).ready(function() {
             }
         })
     });
+
+     function isNumberValid(number) {
+        var regex = /^\d+$/;
+        return regex.test(number);
+    }
 });
 
 </script>

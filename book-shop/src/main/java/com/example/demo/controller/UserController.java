@@ -74,8 +74,8 @@ public class UserController {
              result.setMessage("Đăng ký thành công");
         }catch (Exception e){
              e.printStackTrace();
-             result.setSuccess(false);
-             result.setMessage(e.getMessage());
+            result.setSuccess(false);
+            result.setMessage("Đăng ký thất bại");
         }
         return ResponseEntity.ok(result);
     }

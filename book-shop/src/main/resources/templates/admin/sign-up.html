@@ -1,7 +1,8 @@
 <!DOCTYPE HTML>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Sign Up</title>
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta name="keywords" content="Easy Admin Panel Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template,
@@ -138,16 +139,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         axios.post("/users/register", data).then(function(res){
             NProgress.done();
             if(res.data.success) {
-                dataLogin = {
-                    email: $('#femail').val().trim(),
-                    password: $('#fpass').val().trim()
-                };
-                axios.post("/users/login", dataLogin)
-                    .then(function () {
-                        swal("Đăng ký thành công");
-                        delay: 200;
-                        setTimeout(() => location.replace("/"), 200);
-                    })
+                swal(res.data.message);
+                setTimeout(() => location.replace("/"), 100);
             } else {
                 swal(res.data.message);
             }
