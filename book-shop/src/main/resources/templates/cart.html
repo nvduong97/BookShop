@@ -31,12 +31,12 @@
                     <table class="table table-bordered">
                         <thead>
                             <tr>
-                                <th>IMAGE</th>
-                                <th>BOOK</th>
-                                <th>PRICE</th>
-                                <th>QUANTITY</th>
-                                <th>TOTAL</th>
-                                <th>REMOVE</th>
+                                <th>ẢNH</th>
+                                <th>TÊN SÁCH</th>
+                                <th>GIÁ</th>
+                                <th>SỐ LƯỢNG</th>
+                                <th>THÀNH TIỀN</th>
+                                <th>XÓA</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -49,7 +49,7 @@
                                 </td>
                                 <td th:text="${#numbers.formatDecimal(cartDetail.totalMoney, 0, 'COMMA', 0, 'POINT') + '₫'}"></td>
                                 <td>
-                                    <button class="gray-btn delete-cartDetail" th:attr="cartDetailId=${cartDetail.id}">REMOVE</button>
+                                    <button class="gray-btn delete-cartDetail" th:attr="cartDetailId=${cartDetail.id}">XÓA</button>
                                 </td>
                             </tr>
                         </tbody>
@@ -141,10 +141,10 @@
         });
     });
 
-<!--    function isNumberValid(number) {-->
-<!--        var regex = /^\d+$/;-->
-<!--        return regex.test(number);-->
-<!--    }-->
+    function isNumberValid(number) {
+        var regex = /^\d+$/;
+        return regex.test(number);
+    }
 });
 </script>
 </body>

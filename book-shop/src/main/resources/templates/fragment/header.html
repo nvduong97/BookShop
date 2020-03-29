@@ -27,11 +27,22 @@
                         </a>
                     </div>
                 </th:block>
-                <th:block th:if="${user!=null}">
+                <th:block th:if="${user!=null && user.role == 'ADMIN'}">
                     <div class="col-md-3">
                         <a th:href="@{/admin}">
                             <span class="ph-number" th:text="${user.role + ': ' + user.email}"></span>
                         </a>
+                    </div>
+                    <div class="col-md-6"></div>
+                    <div class="col-md-3">
+                        <a th:href="@{/logout}">
+                            <span class="ph-number">Đăng xuất</span>
+                        </a>
+                    </div>
+                </th:block>
+                <th:block th:if="${user!=null && user.role == 'USER'}">
+                    <div class="col-md-3">
+                            <span class="ph-number" th:text="${user.role + ': ' + user.email}"></span>
                     </div>
                     <div class="col-md-6"></div>
                     <div class="col-md-3">
