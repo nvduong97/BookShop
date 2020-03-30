@@ -16,7 +16,7 @@ Website bán sách.
   - Xem lịch sử đơn hàng (yêu cầu đăng nhập).
   - Xem chi tiết đơn hàng (yêu cầu đăng nhập).
 ## 2.2 Admin:
-- Quản lý sách: thêm, sửa, xoá sách.
+- Quản lý sách: thêm, sửa, xoá sách, tìm kiếm sách.
 - Quản lý đơn hàng: xem danh sách đơn hàng, chi tiết đơn hàng.
 # 3. Hướng dẫn cài đặt và chạy trên môi trường phát triển
 - Clone repo: https://github.com/nvduong97/BookShop
