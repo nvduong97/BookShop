@@ -1,5 +1,5 @@
 # BookShop
-Online book shopping website
+Trang web bán sách
 # 1. Tên ứng dụng
 Website bán sách.
 # 2. Các chức năng chính
